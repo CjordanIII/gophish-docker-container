@@ -1,0 +1,21 @@
+services:
+  gophish:
+    image: gophish/gophish:${SOFTWARE_VERSION_TAG}
+    restart: always
+    environment:
+      - GOPHISH_INITIAL_ADMIN_PASSWORD=${ADMIN_USERNAME}
+      - GOPHISH_INITIAL_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    ports:
+      - "8443:8443" # Map host port 8443 to container port 8443
+      - "8080:8080" # Map host port 8080 to container port 8080
+      - "51766:3333" # Map host port 51766 to container port 3333
+    volumes:
+      - data:/opt/gophish
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data
+      o: bind
